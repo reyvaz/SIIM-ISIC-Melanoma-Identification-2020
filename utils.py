@@ -5,6 +5,7 @@ import tensorflow_addons as tfa
 import tensorflow.keras.backend as K
 import efficientnet.tfkeras as efn
 import matplotlib as mpl
+from matplotlib import pyplot as plt
 
 # EfficientNet Version-Image Size Dictionary
 efn_dict = {0: {'model': efn.EfficientNetB0, 'size': 224},
