@@ -167,6 +167,7 @@ def config_checkpoint(filepath = 'weights.h5', monitor ='val_auc', mode = 'max')
         verbose = 0)
     return checkpoint
 
+LEARNING_RATE = 3e-4
 opts = {'Nadam': tf.keras.optimizers.Nadam(learning_rate=LEARNING_RATE),
         'Radam': tfa.optimizers.RectifiedAdam(learning_rate=LEARNING_RATE),
         'Adam': tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE),
