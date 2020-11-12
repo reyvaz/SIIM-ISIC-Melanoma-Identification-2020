@@ -1,8 +1,9 @@
 import math
+import numpy as np
 import tensorflow as tf
 import tensorflow_addons as tfa
 import tensorflow.keras.backend as K
-import numpy as np
+import efficientnet.tfkeras as efn
 import matplotlib as mpl
 
 # EfficientNet Version-Image Size Dictionary
@@ -182,7 +183,7 @@ opts = {'Nadam': tf.keras.optimizers.Nadam(learning_rate=LEARNING_RATE),
 #     return lr
 #
 # def lr_schedule_builder(params):
-#     return tf.keras.callbacks.LearningRateScheduler(lambda epoch: lrfn(epoch, params), verbose=True) 
+#     return tf.keras.callbacks.LearningRateScheduler(lambda epoch: lrfn(epoch, params), verbose=True)
 
 best_results = [None]
 class show_metrics(tf.keras.callbacks.Callback):
