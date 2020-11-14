@@ -237,5 +237,7 @@ mpl.rcParams.update({'text.color' : "#999999", 'axes.labelcolor' : axes_color,
                      'axes.spines.top': False, 'axes.spines.right': False,
                      'axes.edgecolor': axes_color, 'axes.linewidth':1.0, 'figure.figsize':[8, 4]})
 
+# def describe_ds(ds):
+#     print(str(ds).replace('<', '').replace('>', ''))
 def describe_ds(ds):
-    print(str(ds).replace('<', '').replace('>', ''))
+    print(str(ds).replace('<PrefetchDataset', 'Dataset:').replace('>', ''))
