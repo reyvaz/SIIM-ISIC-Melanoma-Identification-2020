@@ -17,7 +17,7 @@ efn_dict = {0: {'model': efn.EfficientNetB0, 'size': 224},
             6: {'model': efn.EfficientNetB6, 'size': 528},
             7: {'model': efn.EfficientNetB7, 'size': 600}}
 
-
+# Counting Utils
 def count_data_items(filenames):
     # Counts data items in a list of TFRecs
     # the number of data items is written in the name of the .tfrec files, i.e. flowers00-230.tfrec = 230 data items
@@ -36,10 +36,7 @@ def trainable_parameter_count(model):
     return total_count, trainable_count, non_trainable_count
 
 
-#@markdown Auxiliary Augmentation: Shear, Rotate, Zoom-in
-
-
-
+#Augmentation Utils: Shear, Rotate, Zoom-in
 # Credit: shear_img() and rotate_image() adapted from Chris Deotte's code found here:
 # https://www.kaggle.com/cdeotte/triple-stratified-kfold-with-tfrecords/data#Step-3:-Build-Model
 
@@ -117,7 +114,14 @@ def central_zoom(image, resize, zoom_factor = 0.6):
     img = tf.image.resize(img, resize)
     return img
 
-#@markdown Plot Utils
+# Plot Utils
+# matplotlib plotting parameters
+axes_color = '#999999'
+mpl.rcParams.update({'text.color' : "#999999", 'axes.labelcolor' : axes_color,
+                     'font.size': 10, 'xtick.color':axes_color,'ytick.color':axes_color,
+                     'axes.spines.top': False, 'axes.spines.right': False,
+                     'axes.edgecolor': axes_color, 'axes.linewidth':1.0, 'figure.figsize':[8, 4]})
+
 def generate_examples(ds, n_batches = 5):
     # will generate [image, label] pairs from ds
     # each batch contain BATCH_SIZE pairs
@@ -158,6 +162,7 @@ def plot_lr_timeline(lrfn, lr_params, num_epochs = 20, show_list=False):
     plt.show()
     if show_list: print(lr_timeline)
 
+# Train Utils
 def config_checkpoint(filepath = 'weights.h5', monitor ='val_auc', mode = 'max'):
     checkpoint = tf.keras.callbacks.ModelCheckpoint(
         filepath = filepath,
@@ -168,60 +173,12 @@ def config_checkpoint(filepath = 'weights.h5', monitor ='val_auc', mode = 'max')
         verbose = 0)
     return checkpoint
 
-LEARNING_RATE = 3e-4
-opts = {'Nadam': tf.keras.optimizers.Nadam(learning_rate=LEARNING_RATE),
-        'Radam': tfa.optimizers.RectifiedAdam(learning_rate=LEARNING_RATE),
-        'Adam': tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE),
-        'SGD': tf.keras.optimizers.SGD(learning_rate=LEARNING_RATE)}
-
-# def lrfn(epoch, lr_params = lr_params_3e4):
-#     lr_start, lr_max, lr_min, lr_ramp_ep, lr_sus_ep, lr_decay = lr_params
-#     if epoch < lr_ramp_ep:
-#         lr = (lr_max - lr_start) / lr_ramp_ep * epoch + lr_start
-#     elif epoch < lr_ramp_ep + lr_sus_ep:
-#         lr = lr_max
-#     else:
-#         lr = (lr_max - lr_min) * lr_decay**(epoch - lr_ramp_ep - lr_sus_ep) + lr_min
-#     return lr
+# LEARNING_RATE = 3e-4
+# opts = {'Nadam': tf.keras.optimizers.Nadam(learning_rate=LEARNING_RATE),
+#         'Radam': tfa.optimizers.RectifiedAdam(learning_rate=LEARNING_RATE),
+#         'Adam': tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE),
+#         'SGD': tf.keras.optimizers.SGD(learning_rate=LEARNING_RATE)}
 #
-# def lr_schedule_builder(params):
-#     return tf.keras.callbacks.LearningRateScheduler(lambda epoch: lrfn(epoch, params), verbose=True)
-
-best_results = [None]
-class show_metrics(tf.keras.callbacks.Callback):
-    def __init__(self, freq=None, watch='val_loss', mode = 'min'):
-        self.freq = freq
-        self.watch = watch
-        self.mode = mode
-
-    def on_train_begin(self, logs=None):
-        if self.mode == 'min':
-            self.best = np.Inf
-            self.compare = tf.math.less
-        else:
-            self.best = -np.Inf
-            self.compare = tf.math.greater
-        self.best_logs = None
-        self.best_epoch = None
-
-    def on_epoch_end(self, epoch, logs=None):
-        current = logs.get(self.watch)
-        if self.compare(current, self.best):
-            print('New best at Epoch {:03d} {} improved from {:.4f} to {:.4f}'.format(
-                epoch,self.watch, self.best, current))
-            self.best = current
-            self.best_logs = logs
-            self.best_epoch = epoch
-
-        if self.freq:
-            if epoch % self.freq == 0:
-                items = ['{}: {:.4f}'.format(i[0], i[1]) for i in logs.items()]
-                print('Epoch: {:03d}'.format(epoch), *items)
-
-    def on_train_end(self, logs=None):
-        items = ['{}: {:.4f}'.format(i[0], i[1]) for i in self.best_logs.items()]
-        print('\nBest at Epoch: {:03d}'.format(self.best_epoch), *items)
-        best_results[0] = items
 
 def get_optimizer(opt, lr):
     LEARNING_RATE = lr
@@ -230,12 +187,6 @@ def get_optimizer(opt, lr):
                   'Adam': tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE),
                   'SGD': tf.keras.optimizers.SGD(learning_rate=LEARNING_RATE)}
     return optimizers[opt]
-
-axes_color = '#999999'
-mpl.rcParams.update({'text.color' : "#999999", 'axes.labelcolor' : axes_color,
-                     'font.size': 10, 'xtick.color':axes_color,'ytick.color':axes_color,
-                     'axes.spines.top': False, 'axes.spines.right': False,
-                     'axes.edgecolor': axes_color, 'axes.linewidth':1.0, 'figure.figsize':[8, 4]})
 
 # def describe_ds(ds):
 #     print(str(ds).replace('<', '').replace('>', ''))
