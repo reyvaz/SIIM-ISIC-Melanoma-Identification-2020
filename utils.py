@@ -179,16 +179,5 @@ opts = {'Nadam': tf.keras.optimizers.Nadam(learning_rate=LEARNING_RATE),
         'Adam': tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE),
         'SGD': tf.keras.optimizers.SGD(learning_rate=LEARNING_RATE)}
 
-
-# def get_optimizer(opt, lr):
-#     LEARNING_RATE = lr
-#     optimizers = {'Nadam': tf.keras.optimizers.Nadam(learning_rate=LEARNING_RATE),
-#                   'Radam': tfa.optimizers.RectifiedAdam(learning_rate=LEARNING_RATE),
-#                   'Adam': tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE),
-#                   'SGD': tf.keras.optimizers.SGD(learning_rate=LEARNING_RATE)}
-#     return optimizers[opt]
-
-# def describe_ds(ds):
-#     print(str(ds).replace('<', '').replace('>', ''))
 def describe_ds(ds):
     print(str(ds).replace('<PrefetchDataset', 'Dataset:').replace('>', ''))
