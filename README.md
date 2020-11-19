@@ -3,12 +3,12 @@
 #### Solution to the Kaggle 2020 [**SIIM-ISIC Melanoma Classification**](https://www.kaggle.com/c/siim-isic-melanoma-classification) Competition
 
 <br>
-<a href="https://githubtocolab.com/reyvaz/SIIM-ISIC-Melanoma-Identification-2020/blob/master/Melanoma_Classification_2020.ipynb" 
+<a href="https://githubtocolab.com/reyvaz/SIIM-ISIC-Melanoma-Identification-2020/blob/master/Melanoma_Identification_2020.ipynb" 
 rel="see html report">
-<img src="media/colab.png" alt="Drawing" width = "150">
+<img src="media/colab.png" alt="Drawing" width = "110">
 </a>
 
-[Open Notebook in Colab](https://githubtocolab.com/reyvaz/SIIM-ISIC-Melanoma-Identification-2020/blob/master/Melanoma_Classification_2020.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://githubtocolab.com/reyvaz/SIIM-ISIC-Melanoma-Identification-2020/blob/master/Melanoma_Identification_2020.ipynb)
 
 <br>
 
